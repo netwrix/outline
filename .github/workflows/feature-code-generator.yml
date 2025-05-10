@@ -1,0 +1,31 @@
+name: AI Feature Generator
+
+on:
+  issues:
+    types: [labeled, opened]
+
+jobs:
+  generate-feature:
+    if: |
+      (github.event.action == 'labeled' && github.event.label.name == 'feature-request') || 
+      (github.event.action == 'opened' && contains(github.event.issue.labels.*.name, 'feature-request'))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Generate Feature Code
+        uses: yourusername/ai-feature-generator@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          azure-openai-endpoint: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
+          azure-openai-key: ${{ secrets.AZURE_OPENAI_KEY }}
+          gpt41-deployment-name: ${{ secrets.GPT41_DEPLOYMENT_NAME }}
+          gpt-o1-deployment-name: ${{ secrets.GPT_O1_DEPLOYMENT_NAME }}

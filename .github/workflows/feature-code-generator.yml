@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
       
       - name: Generate Feature Code
-        uses: yourusername/ai-feature-generator@v1
+        uses: netwrix/ai-feature-generator@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           azure-openai-endpoint: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
